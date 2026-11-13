@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nicholas Parente – IT Support Specialist</title>
+<meta name="description" content="Nicholas Parente – IT Support Specialist who also builds web apps. Projects, experience and skills.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f3f1ec; --card:#fffefb; --card-2:#faf8f3; --fg:#14161b; --muted:#5d6370; --faint:#9096a2;
+    --line:rgba(20,22,27,.09); --line-2:rgba(20,22,27,.16);
+    --accent:#0d9488; --accent-2:#f97362; --accent-soft:rgba(13,148,136,.11); --accent-ink:#fff;
+    --blob1:rgba(13,148,136,.22); --blob2:rgba(249,115,98,.20);
+    --shadow:0 24px 50px -30px rgba(40,40,30,.35);
+  }
+  [data-theme="dark"]{
+    --bg:#0c0f14; --card:#141922; --card-2:#1a202b; --fg:#eef1f6; --muted:#9aa3b2; --faint:#667082;
+    --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.16);
+    --accent:#2dd4bf; --accent-2:#ff8a7a; --accent-soft:rgba(45,212,191,.12); --accent-ink:#04201b;
+    --blob1:rgba(45,212,191,.13); --blob2:rgba(255,138,122,.10);
+    --shadow:0 24px 50px -30px rgba(0,0,0,.8);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:96px}
+  body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .35s,color .35s}
+  a{color:inherit;text-decoration:none} button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .blobs i{position:absolute;border-radius:50%;filter:blur(90px)}
+  .blobs i:nth-child(1){width:46vw;height:46vw;left:-14vw;top:8vh;background:var(--blob1)}
+  .blobs i:nth-child(2){width:40vw;height:40vw;right:-12vw;top:42vh;background:var(--blob2)}
+  .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 clamp(.8rem,3vw,1.5rem) 3rem}
+
+  /* nav */
+  .nav{position:sticky;top:14px;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:14px 0 18px;padding:.55rem .7rem;border:1px solid var(--line);border-radius:22px;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(14px);box-shadow:var(--shadow)}
+  .brand{display:flex;align-items:center;gap:.7rem}
+  .logo{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--fg);color:var(--bg);font-weight:800;font-size:.9rem;letter-spacing:-.04em}
+  .brand b{font-size:.9rem;letter-spacing:.1em;display:block;line-height:1.1}
+  .brand small{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--faint)}
+  .links{display:flex;gap:.2rem;padding:.3rem;border:1px solid var(--line);border-radius:999px;background:var(--card-2)}
+  .links a{padding:.5rem 1rem;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:.2s}
+  .links a:hover{color:var(--fg)}
+  .links a.on{background:var(--card);color:var(--fg);box-shadow:0 2px 8px -2px rgba(0,0,0,.18)}
+  .links a.on::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:.5rem;vertical-align:middle}
+  .tbtn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;transition:.2s}
+  .tbtn:hover{border-color:var(--accent);color:var(--accent)}
+  .tbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .tbtn .moon{display:none}[data-theme="dark"] .tbtn .sun{display:none}[data-theme="dark"] .tbtn .moon{display:block}
+
+  /* cards */
+  .card{position:relative;border:1px solid var(--line);border-radius:30px;background:var(--card);box-shadow:var(--shadow);padding:clamp(1.2rem,3vw,2.2rem);margin-bottom:18px}
+  .rv{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+  .rv.in{opacity:1;transform:none}
+
+  /* hero */
+  .hero{display:grid;grid-template-columns:1.25fr .75fr;gap:2rem;align-items:center;min-height:min(560px,calc(100vh - 140px));background:linear-gradient(135deg,var(--accent-soft),transparent 55%),var(--card)}
+  .eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+  .hi{margin-top:1.4rem;font-size:clamp(1.4rem,3vw,2rem);font-weight:600;color:var(--muted);letter-spacing:-.03em}
+  h1{font-size:clamp(2.6rem,7.4vw,5.6rem);line-height:1;letter-spacing:-.055em;font-weight:800;margin-top:.1rem;perspective:700px}
+  h1 .word{display:inline-block;white-space:nowrap;margin-right:.22em}
+  .ch{display:inline-block;cursor:pointer;opacity:0;transform:translateY(40px) rotateX(-90deg);transform-origin:center bottom;animation:flip .7s cubic-bezier(.2,.9,.25,1.15) forwards;animation-delay:calc(var(--i) * 50ms + 120ms);transition:transform .35s cubic-bezier(.34,1.8,.5,1),color .2s}
+  .ch.done{opacity:1;transform:none;animation:none}
+  .ch.done:hover,.ch.done:active{transform:translateY(-8px) scale(1.14);color:var(--accent)}
+  @keyframes flip{to{opacity:1;transform:none}}
+  .sub{margin-top:1.4rem;max-width:34rem;font-size:clamp(1.02rem,1.7vw,1.22rem);color:var(--muted)}
+  .cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}
+  .btn{display:inline-flex;align-items:center;gap:.8rem;min-height:54px;padding:.4rem 1.4rem;border-radius:999px;font-weight:600;border:1px solid var(--line-2);background:var(--card);transition:.22s}
+  .btn:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--accent)}
+  .btn.primary{padding:.4rem .5rem .4rem .5rem;font-weight:800;font-size:1.12rem;min-height:60px;box-shadow:0 18px 34px -18px var(--accent);border-color:var(--line-2)}
+  .btn.primary:hover{color:var(--fg)}
+  .btn.primary .dot{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);font-size:1.2rem;transition:transform .3s}
+  .btn.primary:hover .dot{transform:translateY(3px)}
+  .btn.primary span.t{padding-right:1.1rem}
+  .socials{display:flex;gap:.6rem;margin-top:1.4rem}
+  .soc{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);background:var(--card);transition:.2s}
+  .soc:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+  .soc svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  .tile{padding:1.2rem;border:1px solid var(--line);border-radius:22px;background:var(--card)}
+  .tile:nth-child(2){transform:translateY(14px)}.tile:nth-child(4){transform:translateY(14px)}
+  .tile b{display:block;font-size:clamp(1.9rem,3.6vw,2.8rem);letter-spacing:-.05em;line-height:1;font-weight:800}
+  .tile b em{font-style:normal;color:var(--accent)}
+  .tile span{display:block;margin-top:.5rem;font-size:.84rem;color:var(--muted);line-height:1.35}
+
+  /* section head */
+  .sh{display:flex;align-items:flex-start;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-bottom:1.6rem}
+  .sh .left{display:flex;gap:1.1rem;align-items:flex-start}
+  .num{flex:none;width:48px;height:48px;border-radius:14px;display:grid;place-items:center;border:1px solid var(--line);background:var(--card-2);font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--faint)}
+  .sh .lbl{display:flex;align-items:center;gap:.5rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .sh .lbl::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .sh h2{font-size:clamp(1.9rem,4.4vw,3rem);letter-spacing:-.05em;line-height:1.05;font-weight:800;margin-top:.3rem}
+  .sh p{color:var(--muted);margin-top:.4rem;max-width:32rem}
+  .pill{display:inline-flex;align-items:center;gap:.8rem;padding:.35rem .4rem .35rem 1.1rem;border:1px solid var(--line-2);border-radius:999px;background:var(--card);font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;transition:.2s}
+  .pill i{font-style:normal;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink)}
+  .pill:hover{border-color:var(--accent)}
+
+  /* projects */
+  .plist{display:grid;gap:14px}
+  .prow{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1fr);gap:1.6rem;align-items:center;padding:.7rem;border:1px solid var(--line);border-radius:24px;background:var(--card-2);transition:border-color .3s,transform .3s}
+  .prow:hover{border-color:var(--line-2);transform:translateY(-2px)}
+  .pshot{display:block;position:relative;aspect-ratio:16/10;border-radius:18px;overflow:hidden;background:#0b0e13;border:1px solid var(--line)}
+  .pshot img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+  a.pshot:hover img{transform:scale(1.04)}
+  .cover{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;text-align:center;padding:1rem;color:#fff}
+  .cover b{font-size:clamp(1.5rem,3.2vw,2.4rem);letter-spacing:-.04em;font-weight:800}
+  .cover small{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:#a8b0c2;letter-spacing:.12em;text-transform:uppercase}
+  .pbody{padding:.6rem 1rem .6rem 0;display:flex;flex-direction:column;gap:.7rem}
+  .pstat{display:flex;align-items:center;gap:.7rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  .pstat::after{content:"";width:34px;height:1px;background:var(--accent)}
+  .pstat b{order:3;font-weight:500;color:var(--s,var(--accent))}
+  .pstat span{order:1}.pstat::after{order:2}
+  .pbody h3{font-size:clamp(1.4rem,2.6vw,1.9rem);letter-spacing:-.04em;line-height:1.1;font-weight:800}
+  .pbody p{color:var(--muted);font-size:.97rem}
+  .tags{display:flex;flex-wrap:wrap;gap:.4rem}
+  .tags span{font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.28rem .6rem;border-radius:8px;background:var(--accent-soft);color:var(--accent)}
+  [data-theme="light"] .tags span{color:#0b6f66}
+  .plink{display:inline-flex;align-items:center;gap:.5rem;font-weight:700;margin-top:.2rem;transition:gap .25s,color .25s}
+  .plink:hover{gap:.9rem;color:var(--accent)}
+
+  /* experience */
+  .jobs{display:grid;gap:14px}
+  .job{display:grid;grid-template-columns:260px 1fr;gap:1.6rem;padding:1.4rem;border:1px solid var(--line);border-radius:24px;background:var(--card-2)}
+  .job .when{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+  .job h3{margin-top:.5rem;font-size:1.3rem;letter-spacing:-.03em;font-weight:800;line-height:1.2}
+  .job .org{margin-top:.25rem;color:var(--muted);font-size:.93rem}
+  .job ul{list-style:none;display:grid;gap:.6rem}
+  .job li{position:relative;padding-left:1.3rem;color:var(--muted);font-size:.96rem}
+  .job li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.7}
+  .job li.hid{display:none}
+  .more{margin-top:.9rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.06em;color:var(--accent);padding:.5rem .9rem;border-radius:999px;background:var(--accent-soft)}
+
+  /* skills */
+  .skrow{display:grid;grid-template-columns:200px 1fr;gap:1.4rem;padding:1.1rem 0;border-top:1px solid var(--line)}
+  .skrow:first-child{border-top:0;padding-top:0}
+  .skrow h3{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;padding-top:.5rem}
+  .chips{display:flex;flex-wrap:wrap;gap:.5rem}
+  .chips span{padding:.45rem .9rem;border-radius:999px;border:1px solid var(--line-2);background:var(--card-2);font-size:.92rem;font-weight:500;transition:.2s}
+  .chips span:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+  /* cert */
+  .cert{display:grid;grid-template-columns:240px 1fr;gap:1.5rem;align-items:center;padding:.8rem;border:1px solid var(--line);border-radius:24px;background:var(--card-2)}
+  .cert .thumb{display:block;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--line)}
+  .cert .thumb img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .5s}
+  .cert .thumb:hover img{transform:scale(1.05)}
+  .cert h3{font-size:1.25rem;letter-spacing:-.03em;font-weight:800;line-height:1.25;margin:.7rem 0 .3rem}
+  .cert p{color:var(--muted)}
+  .badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .7rem;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+
+  /* contact */
+  .contact{display:grid;grid-template-columns:1.2fr .8fr;gap:2rem;align-items:center}
+  .contact h3{font-size:clamp(1.9rem,4.4vw,3rem);letter-spacing:-.05em;line-height:1.05;font-weight:800}
+  .contact p{color:var(--muted);margin-top:.8rem;max-width:30rem}
+  .actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.5rem}
+  .facts{list-style:none;display:grid;gap:.8rem}
+  .facts li{display:flex;gap:.7rem;color:var(--muted)}
+  .facts li::before{content:"✓";color:var(--accent);font-weight:800}
+  footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6rem;padding:1rem .5rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--faint)}
+
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr;min-height:0}.tile:nth-child(n){transform:none}
+    .prow{grid-template-columns:1fr}.pbody{padding:.4rem .8rem 1rem}
+    .job{grid-template-columns:1fr;gap:1rem}
+    .skrow{grid-template-columns:1fr;gap:.6rem}
+    .cert{grid-template-columns:1fr}.contact{grid-template-columns:1fr}
+  }
+  @media (max-width:720px){
+    .links{display:none}.brand small{display:none}
+    .card{border-radius:24px}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ch{animation:none;opacity:1;transform:none}.rv{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+<div class="blobs"><i></i><i></i></div>
+<div class="wrap">
+  <header class="nav">
+    <a class="brand" href="#home"><span class="logo">NP</span><span><b>NICHOLAS</b><small>IT SUPPORT SPECIALIST</small></span></a>
+    <nav class="links" id="nav" aria-label="Sections">
+      <a href="#home" class="on">Home</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+    </nav>
+    <button class="tbtn" id="theme" aria-label="Switch light or dark theme">
+      <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </header>
+
+  <section class="card hero" id="home">
+    <div>
+      <span class="eyebrow" id="tag"></span>
+      <p class="hi">Hi! I'm</p>
+      <h1 id="name" aria-label="Nicholas Parente"><span class="word" aria-hidden="true">Nicholas</span><span class="word" aria-hidden="true">Parente</span></h1>
+      <p class="sub" id="sub"></p>
+      <div class="cta">
+        <a class="btn primary" href="#projects"><span class="dot">↓</span><span class="t">Explore Projects</span></a>
+        <a class="btn" id="resumeBtn" href="#" target="_blank" rel="noopener noreferrer" hidden>Resume</a>
+      </div>
+      <div class="socials" id="socials"></div>
+    </div>
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section class="card rv" id="projects">
+    <div class="sh">
+      <div class="left"><span class="num">01</span><div><div class="lbl">Projects</div><h2>Things I've built</h2><p>Apps, tools and automations I've made, most of them live and in use.</p></div></div>
+    </div>
+    <div class="plist" id="plist"></div>
+  </section>
+
+  <section class="card rv" id="experience">
+    <div class="sh">
+      <div class="left"><span class="num">02</span><div><div class="lbl">Experience</div><h2>Where I've worked</h2><p>Hands-on IT support across a multi-building manufacturing environment.</p></div></div>
+      <a class="pill" id="resumePill" href="#" target="_blank" rel="noopener noreferrer" hidden>Resume <i>→</i></a>
+    </div>
+    <div class="jobs" id="jobs"></div>
+  </section>
+
+  <section class="card rv" id="skills">
+    <div class="sh">
+      <div class="left"><span class="num">03</span><div><div class="lbl">Skills</div><h2>What I work with</h2></div></div>
+    </div>
+    <div id="skillrows"></div>
+    <div class="sh" style="margin:2.2rem 0 1.2rem"><div class="left"><div><div class="lbl">Certification</div></div></div></div>
+    <div id="certs"></div>
+  </section>
+
+  <section class="card rv" id="contact">
+    <div class="contact">
+      <div>
+        <div class="eyebrow">Contact</div>
+        <h3 style="margin-top:1rem">Looking for an IT Support Specialist?</h3>
+        <p>I'm open to new roles. Reach out and I'll get back to you. If you'd like a closer look at an internal tool like the Cap Design Explorer, ask me and I can walk you through it.</p>
+        <div class="actions" id="actions"></div>
+      </div>
+      <ul class="facts">
+        <li>Calm under pressure, including incident recovery</li>
+        <li>Self-starter who takes initiative without being asked</li>
+        <li>Comfortable supporting users at every technical level</li>
+        <li>Flexible with after-hours availability</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer><span id="copy"></span><span>Built by hand</span></footer>
+</div>
+
+<script>
+/* EDIT THIS BLOCK. Leave a link as "" and its button is hidden. */
+const CONFIG = {
+  name: "Nicholas Parente",
+  tag: "IT Support Specialist · Builder",
+  intro: "Keeping multi-building networks, workstations and people running smoothly, and building web apps on the side.",
+  links: { LinkedIn: "", GitHub: "", Resume: "resume.pdf", Email: "" }
+};
+
+const STATS = [
+  { n: 65, suffix: "+", label: "workstations deployed" },
+  { n: 50, suffix: "+", label: "end-users supported daily" },
+  { n: 20, suffix: "+", label: "remote users set up on RDP" },
+  { n: 3,  suffix: "+", label: "years hands-on IT support" }
+];
+
+const PROJECTS = [
+  { title: "BetsBooked", status: "live", cover: "bets",
+    desc: "AI-generated sports picks across NFL, NCAAF, MLB, NBA, NHL and NCAAB, built from live odds at 15+ US sportsbooks. Shipped as a web app and an iOS app on the App Store, with Stripe payments for premium picks.",
+    tags: ["Next.js", "TypeScript", "Prisma", "Postgres", "Stripe", "iOS"], url: "https://betsbooked.com" },
+  { title: "GetGamma", status: "live", image: "images/getgamma.jpg",
+    desc: "Options-market education and analytics community: daily GEX briefings, intraday updates and live chart access for traders.",
+    tags: ["GEX", "Options Analytics", "Community", "Discord"], url: "https://getgamma.io" },
+  { title: "Popcard", status: "wip", image: "images/popcard.jpg",
+    desc: "A digital greeting-card app where cards open like real ones, with a wax seal, an envelope and a fold.",
+    tags: ["Web App", "Digital Cards", "Design"], url: "" },
+  { title: "Cap Design Explorer", status: "internal", image: "images/cap-design-explorer.jpg", imageLink: true,
+    desc: "A film-capacitor winding design calculator with an interactive 3D model, built for the engineering team at my employer. It's an internal company tool, so only a screenshot is shown here. Get in touch if you'd like to hear more.",
+    tags: ["JavaScript", "3D", "Engineering Tools"], url: "", ctaLabel: "Ask about it", ctaHref: "#contact" },
+  { title: "Automated Shorts Pipeline", status: "live", image: "images/spacingout.jpg",
+    desc: "Runs three faceless YouTube Shorts channels end to end: scripts, voiceover, video, captions and upload, managed from a Flask dashboard.",
+    tags: ["Python", "Claude API", "ffmpeg", "YouTube API", "Flask"],
+    url: "https://www.youtube.com/@SpacingOut1/shorts", urlLabel: "Watch on YouTube" },
+  { title: "Invoice Search & Outreach Tool", status: "live", cover: "invoice",
+    desc: "A self-contained HTML tool that turns a QuickBooks CSV export into searchable invoices with filters and price-comparison stats, plus a prospecting tab with drafted outreach templates for a family contracting business.",
+    tags: ["JavaScript", "HTML", "CSV", "QuickBooks"], url: "" }
+];
+
+const EXPERIENCE = [
+  { role: "IT Junior Administrator", org: "Electronic Concepts, Inc. · Eatontown, NJ", when: "Apr 2024 — Present",
+    points: [
+      "Deployed and configured 65+ workstations and laptops, managing the full hardware lifecycle from unboxing and data migration to disposal of retired equipment.",
+      "Rolled out Microsoft Authenticator MFA and migrated staff to the company's new email system and licensing.",
+      "Supported active ransomware incident response: provided system and network information to the FBI CAT team, then wiped and reimaged all affected workstations to restore operations.",
+      "Resolved multi-building network outages by diagnosing and resetting switches and replacing faulty cabling, with minimal downtime.",
+      "Provide daily support to 50+ end-users (Outlook, mobile devices, printers, VPN) and configured RDP access for 20+ remote users.",
+      "Monitor Mimecast daily (policies, sender blocks, held messages) and led the Mimecast phishing-awareness training rollout.",
+      "Manage new-hire onboarding end to end: computer setup, M365 accounts, ID badges, Anzio, network drives and RDP."
+    ] },
+  { role: "Help Desk Support", org: "A&D Tech Solutions · Jackson, NJ", when: "Aug 2023 — Present",
+    points: [
+      "Diagnosed and resolved hardware and network problems for end-users across multiple departments, escalating when higher-level support was needed.",
+      "Reset passwords and unlocked accounts in Active Directory; configured shared mailboxes and distribution lists in Exchange Admin Center.",
+      "Configured managed Edge favorites through Microsoft Intune, linked Apple Business Manager to Intune, and wrote documentation for common issues."
+    ] },
+  { role: "Project Manager", org: "Liberty Maintenance Contractors · Jackson, NJ", when: "Nov 2019 — Jul 2023",
+    points: [
+      "Planned and oversaw maintenance and construction projects from start to finish, on time, within budget and within scope.",
+      "Personally completed projects where capable, reducing subcontracting needs and lowering overall costs."
+    ] }
+];
+
+const SKILLS = {
+  "Systems & Admin": ["Active Directory", "Microsoft Intune", "Microsoft 365", "Exchange Admin Center & OWA", "Mimecast", "SolarWinds Service Desk", "Apple Business Manager"],
+  "Hardware & Imaging": ["Windows 10/11 Builds", "Imaging & Reimaging", "Hardware Repair", "Server Maintenance", "APC Battery Backups"],
+  "Networking": ["Switch Config & Resets", "Wireless & Ethernet", "VPN", "RDP", "Network Drive Mapping", "Domain Management"],
+  "Apps & Peripherals": ["SolidWorks", "TurboCAD", "Anzio", "Adobe Acrobat & E-Sign", "QuickBooks (support)", "Zoom", "Wasp & DYMO Printers", "VoIP Phones", "Amcrest IP Cameras", "ID Card & Barcode Systems"],
+  "Builds & Scripting": ["Python", "JavaScript", "Next.js", "TypeScript", "Flask"]
+};
+
+const CERTS = [
+  { title: "DoD Mandatory Controlled Unclassified Information (CUI) Training", issuer: "Defense Counterintelligence and Security Agency", date: "Completed Nov 11, 2026", img: "images/cui-certificate.jpg" }
+];
+
+const COVERS = {
+  bets:    { bg: "radial-gradient(circle at 30% 20%,#12304a,#070b14 70%)", html: '<b>Bets<span style="color:#05e3a9">Booked</span></b><small>AI sports picks · iOS &amp; web</small>' },
+  invoice: { bg: "radial-gradient(circle at 25% 80%,#1e3a2a,#0b100d 70%)", html: '<b>Invoice Search</b><small>QuickBooks CSV → searchable tool</small>' }
+};
+const STATUS = { live: ["Live", "#14a37f"], wip: ["In progress", "#d98a0b"], internal: ["Internal tool", "#6b7cff"] };
+
+const $ = id => document.getElementById(id);
+const mk = (tag, cls, txt) => { const e = document.createElement(tag); if(cls) e.className = cls; if(txt) e.textContent = txt; return e; };
+const ext = a => { const h = a.getAttribute("href") || ""; if(!h.startsWith("#") && !h.startsWith("mailto:")){ a.target = "_blank"; a.rel = "noopener noreferrer"; } return a; };
+
+/* theme */
+(function(){
+  let s = null; try { s = localStorage.getItem("np-theme2"); } catch(e){}
+  if(s) document.documentElement.dataset.theme = s;
+  $("theme").onclick = () => { const t = document.documentElement.dataset.theme === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = t; try { localStorage.setItem("np-theme2", t); } catch(e){} };
+})();
+
+/* hero */
+$("tag").textContent = CONFIG.tag; $("sub").textContent = CONFIG.intro; $("copy").textContent = "© " + new Date().getFullYear() + " " + CONFIG.name;
+(function(){
+  const words = CONFIG.name.split(" "); let i = 0;
+  document.querySelectorAll("#name .word").forEach((w, wi) => {
+    w.textContent = ""; [...(words[wi] || "")].forEach(c => { const sp = mk("span", "ch", c); sp.style.setProperty("--i", i++); sp.addEventListener("animationend", () => sp.classList.add("done"), { once: true }); w.appendChild(sp); });
+  });
+})();
+STATS.forEach(s => { const t = mk("div", "tile"); const b = mk("b"); const n = mk("span"); n.textContent = "0"; n.style.cssText = "display:inline;margin:0;font-size:inherit;color:inherit"; b.append(n, mk("em", "", s.suffix)); t.append(b, mk("span", "", s.label)); t.dataset.n = s.n; $("tiles").appendChild(t); });
+(function(){
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll("#tiles .tile").forEach((d, k) => {
+    const n = +d.dataset.n, el = d.querySelector("b span"); if(reduce){ el.textContent = n; return; }
+    setTimeout(() => { const t0 = performance.now(); (function tick(t){ const p = Math.min((t - t0) / 1100, 1); el.textContent = Math.round(n * (1 - Math.pow(1 - p, 3))); if(p < 1) requestAnimationFrame(tick); })(t0); }, 500 + k * 120);
+  });
+})();
+const ICONS = {
+  LinkedIn: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11v6M8 7.5v.01M12 17v-3.5a2 2 0 0 1 4 0V17M12 11v6"/></svg>',
+  GitHub: '<svg viewBox="0 0 24 24"><path d="M9 19c-4 1.3-4-2-6-2.5m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>',
+  Email: '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>'
+};
+["LinkedIn", "GitHub", "Email"].forEach(k => { const h = CONFIG.links[k]; if(!h) return; const a = mk("a", "soc"); a.href = h; a.setAttribute("aria-label", k); a.innerHTML = ICONS[k]; ext(a); $("socials").appendChild(a); });
+if(CONFIG.links.Resume){ [$("resumeBtn"), $("resumePill")].forEach(a => { a.href = CONFIG.links.Resume; a.hidden = false; }); }
+[["LinkedIn", "Message me on LinkedIn"], ["Email", "Email me"], ["GitHub", "See my GitHub"], ["Resume", "View my resume"]].forEach(([k, label]) => {
+  const h = CONFIG.links[k]; if(!h) return; const a = mk("a", "btn", label); a.href = h; ext(a); $("actions").appendChild(a);
+});
+if(!$("actions").children.length) $("actions").style.display = "none";
+
+/* projects */
+PROJECTS.forEach((p, i) => {
+  const row = mk("article", "prow"); const [lab, col] = STATUS[p.status];
+  const link = p.url || (p.imageLink ? p.image : "");
+  const shot = link ? mk("a", "pshot") : mk("div", "pshot");
+  if(link){ shot.href = link; ext(shot); shot.setAttribute("aria-label", p.title); }
+  if(p.image){ const im = mk("img"); im.src = p.image; im.alt = p.title + " screenshot"; im.loading = "lazy"; shot.appendChild(im); }
+  else { const c = COVERS[p.cover]; const d = mk("div", "cover"); d.style.background = c.bg; d.innerHTML = c.html; shot.appendChild(d); }
+  const body = mk("div", "pbody");
+  const st = mk("div", "pstat"); st.style.setProperty("--s", col); st.append(mk("span", "", String(i + 1).padStart(2, "0")), mk("b", "", lab));
+  body.append(st, mk("h3", "", p.title), mk("p", "", p.desc));
+  const t = mk("div", "tags"); p.tags.forEach(x => t.appendChild(mk("span", "", x))); body.appendChild(t);
+  if(p.url){ const a = mk("a", "plink"); a.href = p.url; ext(a); a.append((p.urlLabel || "Visit") + " ", mk("span", "", "↗")); body.appendChild(a); }
+  if(p.ctaHref){ const a = mk("a", "plink"); a.href = p.ctaHref; a.append(p.ctaLabel + " ", mk("span", "", "→")); body.appendChild(a); }
+  row.append(shot, body); $("plist").appendChild(row);
+});
+
+/* experience */
+EXPERIENCE.forEach(j => {
+  const d = mk("article", "job"); const l = mk("div"); l.append(mk("div", "when", j.when), mk("h3", "", j.role), mk("div", "org", j.org));
+  const r = mk("div"); const ul = mk("ul"); j.points.forEach((t, i) => ul.appendChild(mk("li", i >= 4 ? "hid" : "", t))); r.appendChild(ul);
+  if(j.points.length > 4){
+    const b = mk("button", "more", "Show all " + j.points.length + " ↓"); let open = false;
+    b.onclick = () => { open = !open; ul.querySelectorAll("li").forEach((x, i) => { if(i >= 4) x.classList.toggle("hid", !open); }); b.textContent = open ? "Show less ↑" : "Show all " + j.points.length + " ↓"; };
+    r.appendChild(b);
+  }
+  d.append(l, r); $("jobs").appendChild(d);
+});
+
+/* skills */
+Object.entries(SKILLS).forEach(([g, items]) => { const r = mk("div", "skrow"); const c = mk("div", "chips"); items.forEach(s => c.appendChild(mk("span", "", s))); r.append(mk("h3", "", g), c); $("skillrows").appendChild(r); });
+
+/* certs */
+CERTS.forEach(c => {
+  const d = mk("article", "cert"); const th = mk("a", "thumb"); th.href = c.img; ext(th); const im = mk("img"); im.src = c.img; im.alt = c.title + " certificate"; im.loading = "lazy"; th.appendChild(im);
+  const t = mk("div"); t.append(mk("span", "badge", c.date), mk("h3", "", c.title), mk("p", "", c.issuer));
+  const a = mk("a", "plink", "View certificate ↗"); a.href = c.img; ext(a); a.style.marginTop = ".8rem"; t.appendChild(a); d.append(th, t); $("certs").appendChild(d);
+});
+
+/* reveal + scroll spy */
+const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .08 });
+document.querySelectorAll(".rv").forEach(el => io.observe(el));
+const links = [...document.querySelectorAll("#nav a")];
+const spy = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) links.forEach(l => l.classList.toggle("on", l.getAttribute("href") === "#" + e.target.id)); }), { rootMargin: "-30% 0px -60% 0px" });
+["home", "projects", "experience", "skills", "contact"].forEach(id => spy.observe($(id)));
+</script>
+</body>
+</html>
